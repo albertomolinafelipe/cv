@@ -1,0 +1,166 @@
+\definecolor{maincol}{RGB}{ 64,64,64}
+
+
+\definecolor{darkcol}{RGB}{ 70, 70, 70}         % #464646
+\definecolor{lightcol}{RGB}{245,245,245}        % #F5F5F5
+\definecolor{accentcol}{RGB}{59,77,97}          % #3B4D61
+
+\definecolor{kdbackground}{RGB}{31, 31, 40}     % #1F1F28
+\definecolor{klbackground}{RGB}{236, 235, 230}  % #ECEBE6
+\definecolor{kdblue}{RGB}{34, 50, 73}           % #223249
+
+\definecolor{kltext}{RGB}{220, 215, 186}        % #DCD7BA
+\definecolor{klaccent}{RGB}{225, 191, 130}      % #E1BF82
+\definecolor{klfainttext}{RGB}{114, 113, 105}   % #727169
+
+\definecolor{kdtext}{RGB}{24, 24, 32}           % #181820
+\definecolor{kdaccent}{RGB}{22, 22, 29}         % #16161D
+
+
+\newcommand{\mpwidth}{\linewidth-\fboxsep-\fboxsep}
+	
+
+
+%----------------------------------------------------------------------------------------
+%	 CV TEXT
+%----------------------------------------------------------------------------------------
+
+\newcommand{\normaltext}[1] {
+	\begin{tabular*}{1\mpwidth}{p{0.98\mpwidth}}
+		\parbox{1\mpwidth}{#1}
+	\end{tabular*}
+}
+\newcommand{\smalltext}[1] {
+	\begin{tabular*}{0.8\mpwidth}{p{0.8\mpwidth}}
+		\parbox{0.8\mpwidth}{#1}
+	\end{tabular*}
+}
+%----------------------------------------------------------------------------------------
+%	CV SECTION
+%----------------------------------------------------------------------------------------
+
+\newlength{\barw}
+\newcommand{\heading}[2][kdblue] {
+	\vspace{10pt}
+	\settowidth{\barw}{\textbf{\LARGE #2}}
+	\normaltext{
+		\textbf{\LARGE #2}\\[-4pt]
+		\textcolor{#1}{ \rule{\barw}{1.5pt} }
+	}
+}
+
+\newcommand{\subheading}[2] {
+	\vspace{6pt}
+	\settowidth{\barw}{\textbf{\Large #1}}
+	\normaltext{
+		\textbf{\Large{\textcolor{accentcol}{#1}}}\\[-4pt]
+		\textcolor{#2}{ \rule{\barw}{1.5pt} }
+	}
+}
+
+\newcommand{\name}[1] {
+	\vspace{16pt}
+	\normaltext{
+		\textbf{\Huge{\textcolor{accentcol}{#1}}}\\[-4pt]
+		 
+	}
+}
+
+
+%----------------------------------------------------------------------------------------
+%	META SKILL
+%----------------------------------------------------------------------------------------
+
+% Renders a progress-bar to indicate a certain skill in percent.
+% param 1: name of the skill / tech / etc.
+% param 2: level (for example in years)
+% param 3: percent, values range from 0 to 1
+\newcommand{\cvskill}[3] {
+	\begin{tabular*}{1\mpwidth}{p{0.6\mpwidth}  r}
+ 		\textcolor{black}{\textbf{#1}} & \textcolor{maincol}{#2}\\
+	\end{tabular*}%
+	
+	\hspace{0pt}
+	\begin{tikzpicture}[scale=1,rounded corners=2pt,very thin]
+		\fill [lightcol] (0,0) rectangle (0.8*\mpwidth, 0.15);
+		\fill [accentcol] (0,0) rectangle (#3*0.8*\mpwidth, 0.15);
+  	\end{tikzpicture}%
+}
+
+
+%----------------------------------------------------------------------------------------
+%	 CV EVENT
+%----------------------------------------------------------------------------------------
+
+% Renders a table and a paragraph (normaltext) wrapped in a parbox (to ensure minimum content
+% is glued together when a pagebreak appears).
+% Additional Information can be passed in text or list form (or other environments).
+% the work you did
+% param 1: time-frame i.e. Sep 14 - Jan 15 etc.
+% param 2:	 event name (job position etc.)
+% param 3: Customer, Employer, Industry
+% param 4: Short description
+% param 5: work done (optional)
+% param 6: technologies include (optional)
+% param 7: achievements (optional)
+\newcommand{\cvevent}[7] {
+	
+	% we wrap this part in a parbox, so title and description are not separated on a pagebreak
+	% if you need more control on page breaks, remove the parbox
+	\parbox{\mpwidth}{
+		\begin{tabular*}{1\mpwidth}{p{0.66\mpwidth}  r}
+	 		\textcolor{black}{\textbf{#2}} & \colorbox{kdblue}{\makebox[0.32\mpwidth]{\textcolor{klbackground}{\textbf{#1}}}} \\
+			\textcolor{maincol}{#3} & \\
+		\end{tabular*}\\[8pt]
+	
+		%\ifthenelse{\isempty{#4}}{}{
+		%	\normaltext{#4}\\
+		%}
+	}
+	%\vspace{4pt}
+}
+
+
+%----------------------------------------------------------------------------------------
+%	 CV META EVENT
+%----------------------------------------------------------------------------------------
+
+% Renders a CV event on the sidebar
+% param 1: title
+% param 2: subtitle (optional)
+% param 3: customer, employer, etc,. (optional)
+% param 4: info text (optional)
+\newcommand{\cvmetaevent}[5] {
+	\textcolor{#3} { \normaltext{\textbf{\begin{flushleft}#1\end{flushleft}}}}
+    \textcolor{#3} {\normaltext{\textbf{#2}} } \\[8pt]
+    \ifthenelse{\isempty{#4}}{}{\normaltext{\textcolor{#5}{#4}}\\[-1pt]}
+}
+
+
+
+
+\newcommand{\vcenteredinclude}[1]{\begingroup
+\setbox0=\hbox{\includegraphics{#1}}%
+\parbox{\wd0}{\box0}\endgroup}
+\newcommand{\tab}[1]{\hspace{.2\textwidth}\rlap{#1}}
+\newcommand*{\vcenteredhbox}[1]{\begingroup
+\setbox0=\hbox{#1}\parbox{\wd0}{\box0}\endgroup}
+
+% icon shortcut
+\newcommand{\icon}[3] { 							
+	\makebox(#2, #2){\textcolor{#3}{\csname fa#1\endcsname}}
+}
+% icon with text shortcut
+\newcommand{\icontext}[5]{ 						
+	\vcenteredhbox{\icon{#1}{#2}{#4}}  \hspace{2pt}  \parbox{0.9\mpwidth}{\textcolor{#5}{#3}}
+}
+
+% icon with website url
+\newcommand{\iconhref}[6]{ 						
+    \vcenteredhbox{\icon{#1}{#2}{#5}}  \hspace{2pt} \href{#4}{\textcolor{#6}{#3}}
+}
+
+% icon with email link
+\newcommand{\iconemail}[6]{ 						
+    \vcenteredhbox{\icon{#1}{#2}{#5}}  \hspace{2pt} \href{mailto:#4}{\textcolor{#6}{#3}}
+}
